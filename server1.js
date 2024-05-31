@@ -15,24 +15,14 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
   next();
 });
-
+app.use(express.static(__dirname + "/static"))
 // Connect to MongoDB
 const { MongoClient, ObjectId } = require("mongodb");
-
 const client = new MongoClient(
     'mongodb+srv://abdubash04:Family01234@cluster0.datjqek.mongodb.net/',
-  { useNewUrlParser: true, useUnifiedTopology: true }
 );
+var db = client.db("webstore")
 
-let db;
-client.connect()
-  .then(() => {
-    db = client.db('webstore');
-    console.log("Connected to MongoDB");
-  })
-  .catch(error => {
-    console.error("Failed to connect to MongoDB", error);
-  });
 
 // Logger Middleware
 app.use((req, res, next) => {
